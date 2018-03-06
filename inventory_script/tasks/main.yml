@@ -1,0 +1,77 @@
+---
+- name: Copy tarfile to tmp
+  copy:
+    src: "{{ item }}"
+    dest: /tmp/
+  with_items:
+      - inventory_cleaner.tar.gz
+      
+
+- name: Copy inventory_cleaner.py to inventory_cleaner.py_old_back
+  copy:
+    src: '{{ script_path }}/{{ item }}'
+    dest: '{{ script_path }}/inventory_cleaner.py_old_back'
+    remote_src: True
+  with_items:
+      - inventory_cleaner.py
+
+
+- name: Unarchive a inventory_cleaner.tar.gz file
+  unarchive:
+    src: /tmp/{{ item }}
+    dest: '{{ script_path }}'
+    remote_src: True
+  with_items:
+      - inventory_cleaner.tar.gz
+
+
+- name: Set the required permission for the inventory_cleaner.py script
+  file: 
+    path: '{{ script_path }}/inventory_cleaner.py'  
+    owner: somesh
+    group: somesh
+    mode: 0644   
+
+
+- name: Set the required permission for the files inside tools folder
+  file:
+    path: '{{ script_path }}'
+    state: directory
+    owner: somesh
+    group: somesh
+    mode: 0644
+    recurse: yes
+
+
+- name: Set the required permission for the tools folder
+  file:
+    path: '{{ script_path }}/tools'
+    state: directory
+    owner: somesh
+    group: somesh
+    mode: 0775
+
+
+- name: Set the SELinux policy for the inventory_cleaner.py
+  command: chcon system_u:object_r:usr_t:s0 '{{ script_path }}/inventory_cleaner.py'
+
+
+- name: Set the SELinux policy for the tools folder and inside files
+  command: chcon -R system_u:object_r:usr_t:s0 '{{ script_path }}/tools'
+
+
+- name: Change in crontab for inventory_cleaner.sh script
+  lineinfile:
+    path: /etc/crontab
+    regexp: '^#* * * * * somesh $PRODROOT/bin/inventory_cleaner.sh'
+    insertafter: '^## inventory_cleaner.sh'
+    line: '* * * * * somesh $PRODROOT/bin/inventory_cleaner.sh 2>&1 | $CRONOLOG -S $LOGDIR/inventory_cleaner_stdout.log $LOGDIR/inventory_cleaner_stdout-\%Y\%m\%d.log
+'
+    backup: yes
+
+
+- name: Remove tarfile from tmp
+  file:
+    state: absent
+    path: /tmp/inventory_cleaner.tar.gz
+

@@ -1,0 +1,11 @@
+---
+  - hosts: all
+    become: yes
+    become_user: root
+    become_method: su
+
+    roles:
+      - inventory_script 
+
+    vars:
+      script_path: /home/somesh
