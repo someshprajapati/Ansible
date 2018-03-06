@@ -1,0 +1,1 @@
+# Copy tarfile to tmp folder on remote server, take the backup of old file, Unarchive the copied file, Set the required permission for file and folder, Set the SELinux policy for files and folder, Changes in crontab and finally remove the file from the tmp folder
