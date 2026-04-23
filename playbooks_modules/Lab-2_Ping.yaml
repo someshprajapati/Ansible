@@ -1,6 +1,6 @@
 ---
-- hosts: all
+- name: Ping All Host Nodes
+  hosts: all
   tasks:
-    - name: Ping All Host Nodes
       ping:
       remote_user: vagrant

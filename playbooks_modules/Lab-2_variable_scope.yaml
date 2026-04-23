@@ -1,0 +1,15 @@
+---
+- name: Print variables
+  hosts: all
+  tasks:
+    - name: Print variable with host scope
+      debug:
+        msg: "Host Scope Variable: {{ owner }}"
+
+    - name: Print variable with group scope
+      debug:
+        msg: "Group Scope Variable: {{ owner }}"
+
+    - name: Print variable with global scope
+      debug:
+        msg: "Global Scope Variable: {{ owner }}"
