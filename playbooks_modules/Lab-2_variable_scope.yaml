@@ -1,15 +1,39 @@
 ---
 - name: Print variables
   hosts: all
+  vars:
+    global_owner: admin
+
   tasks:
     - name: Print variable with host scope
       debug:
-        msg: "Host Scope Variable: {{ owner }}"
+        msg: "Host Scope Variable (inventory host var): {{ hostvars[inventory_hostname].owner | default('Not defined') }}"
 
     - name: Print variable with group scope
       debug:
-        msg: "Group Scope Variable: {{ owner }}"
+        msg: "Group Scope Variable (inventory group var): {{ ansible_python_interpreter | default('Not defined') }}"
 
     - name: Print variable with global scope
       debug:
-        msg: "Global Scope Variable: {{ owner }}"
+        msg: "Global Scope Variable (play var): {{ global_owner }}"
+
+    - name: Validate host scope variable
+      assert:
+        that:
+          - hostvars[inventory_hostname].owner is defined
+        fail_msg: "Host scope variable 'owner' is not defined for {{ inventory_hostname }} in the inventory file."
+        success_msg: "Host scope variable 'owner' is defined for {{ inventory_hostname }}."
+
+    - name: Validate group scope variable
+      assert:
+        that:
+          - ansible_python_interpreter is defined
+        fail_msg: "Group scope variable 'ansible_python_interpreter' is not defined in [test_server:vars]."
+        success_msg: "Group scope variable 'ansible_python_interpreter' is available for {{ inventory_hostname }}."
+
+    - name: Validate play scope variable
+      assert:
+        that:
+          - global_owner is defined
+        fail_msg: "Play scope variable 'global_owner' is not defined."
+        success_msg: "Play scope variable 'global_owner' is available in the playbook."
