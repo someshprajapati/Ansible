@@ -1,0 +1,13 @@
+---
+- name: Copy file from local to remote clients
+  hosts: all
+  
+  tasks:
+  - name: Copying file 
+    become: true
+    copy:
+     src: /home/somesh/some.cfg
+     dest: /tmp
+     owner: somesh
+     group: somesh
+     mode: 0644

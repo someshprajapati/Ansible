@@ -2,5 +2,6 @@
 - name: Ping All Host Nodes
   hosts: all
   tasks:
+    - name: Print variable with host scope
       ping:
       remote_user: vagrant

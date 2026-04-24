@@ -1,0 +1,21 @@
+---
+- name: Install and start Nginx
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install nginx package
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: Gather installed package facts
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Ensure nginx service is enabled and running
+      when: "'nginx' in ansible_facts.packages"
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true

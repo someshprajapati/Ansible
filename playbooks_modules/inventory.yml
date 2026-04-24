@@ -1,0 +1,15 @@
+all:
+  children:
+    test_server:
+      hosts:
+        "192.168.56.12":
+          hostname: node2
+          ansible_user: vagrant
+          ansible_password: vagrant
+          owner: somesh
+        "192.168.56.13":
+          hostname: node3
+          ansible_user: vagrant
+          ansible_password: vagrant
+      vars:
+        ansible_python_interpreter: /usr/bin/python3.12
