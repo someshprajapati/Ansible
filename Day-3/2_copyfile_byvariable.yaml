@@ -3,8 +3,8 @@
   hosts: all
   vars:
    srcfile: /home/somesh/somefile
+
   tasks:
-   
   - name: Copying file
     become: true
     copy:

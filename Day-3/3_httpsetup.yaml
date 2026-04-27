@@ -1,6 +1,8 @@
 ---
 - name: Setup httpd and open firewall port
   hosts: all
+  became: true
+
   tasks:
   - name: Install apache packages
     yum:

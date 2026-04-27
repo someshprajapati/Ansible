@@ -3,14 +3,14 @@
   hosts: all
 
   tasks:
-   - name: Copying file 
-     become: true
-     copy:
-      src: cfile.sh
-      dest: /home/somesh
-      owner: somesh
-      group: somesh
-      mode: 0644
+    - name: Copying file 
+      become: true
+      copy:
+        src: cfile.sh
+        dest: /home/somesh
+        owner: somesh
+        group: somesh
+        mode: 0644
 
     - name: Schedule cron
       cron:
