@@ -1,18 +1,19 @@
 ---
-- name: Setup httpd and open firewall port
+- name: Install and start Nginx
   hosts: all
   become: yes
 
   tasks:
-    - name: Install apache packages
+    - name: Install nginx package
       ansible.builtin.package:
-        name: httpd
+        name: nginx
         state: present
 
-    - name: Start httpd
-      service:
-        name: httpd
+    - name: Ensure nginx service is enabled and running
+      ansible.builtin.service:
+        name: nginx
         state: started
+        enabled: true
 
     - name: Open port 80 for http access
       firewalld:
