@@ -1,0 +1,33 @@
+---
+- name: Install and start Nginx
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install nginx package
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+      tags:
+        - install
+        - nginx
+
+    - name: Ensure nginx service is enabled and running
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+      tags:
+        - service
+        - nginx
+
+    - name: Allow HTTP traffic through UFW
+      community.general.ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
+      when: ansible_os_family == "Debian"
+      tags:
+        - firewall
+        - nginx

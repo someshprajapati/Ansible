@@ -3,10 +3,11 @@
   hosts: all
 
   tasks:
-- name: Create users
-  user:
-    name: "{{ item }}"
-  loop:
-      - jerry
-      - kramer
-      - eliane
+    - name: Create users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - jerry
+        - kramer
+        - eliane

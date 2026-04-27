@@ -2,25 +2,28 @@
 - name: Verify apache installation
   hosts: all
   tasks:
-  - name: Ensure apache is at the latest version
-    yum:
-     name: httpd
-     state: latest
+    - name: Ensure apache is at the latest version
+      ansible.builtin.apt:
+        name: apache2
+        state: latest
+        update_cache: true
 
-  - name: Copy updated apache config file
-    copy:
-     src: /tmp/httpd.conf
-     dest: /etc/httpd.conf
-    notify:
-    - Restart apache
- 
-  - name: Ensure apache is running
-    service:
-     name: httpd
-     state: started
+    - name: Copy updated apache config file
+      ansible.builtin.copy:
+        src: /tmp/apache2.conf
+        dest: /etc/apache2/apache2.conf
+        remote_src: true
+      notify:
+        - Restart apache
+
+    - name: Ensure apache is running
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: true
 
   handlers:
     - name: Restart apache
-      service:
-       name: httpd
-       state: restarted
+      ansible.builtin.service:
+        name: apache2
+        state: restarted
