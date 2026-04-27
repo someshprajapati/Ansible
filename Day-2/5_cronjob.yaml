@@ -3,6 +3,15 @@
   hosts: all
 
   tasks:
+   - name: Copying file 
+     become: true
+     copy:
+      src: cfile.sh
+      dest: /home/somesh
+      owner: somesh
+      group: somesh
+      mode: 0644
+
     - name: Schedule cron
       cron:
         name: This job is scheduled by Ansible
@@ -11,5 +20,5 @@
         day: "*"
         month: "*"
         weekday: "4"
-        user: root
+        user: somesh
         job: "/home/somesh/cfile.sh"
