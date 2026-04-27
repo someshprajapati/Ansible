@@ -5,7 +5,7 @@
 
   tasks:
     - name: Install apache packages
-      yum:
+      ansible.builtin.service:
         name: httpd
         state: present
 
