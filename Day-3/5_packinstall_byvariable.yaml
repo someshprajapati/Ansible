@@ -7,10 +7,10 @@
   tasks:
   - name: Install package
     yum:
-     name: “{{ pack }}”
+     name: "{{ pack }}""
      state: present
 
   - name: Start service
     service:
-     name: “{{ pack }}”
+     name: "{{ pack }}"
      state: started

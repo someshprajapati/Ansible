@@ -12,7 +12,7 @@
   - Reload firewalld
  
 - name: Ensure firewalld is running
-    service:
+  service:
      name: firewalld
      state: started
 
