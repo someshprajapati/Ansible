@@ -1,6 +1,6 @@
 ---
 - name: Find a process and kill it 
-  hosts: 10.253.1.115
+  hosts: all
  
   tasks:
     - name: Get running processes from remote host

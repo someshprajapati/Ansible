@@ -6,7 +6,7 @@
   - name: Copying file 
     become: true
     copy:
-     src: /home/somesh/some.cfg
+     src: /home/somesh/someh.cfg
      dest: /tmp
      owner: somesh
      group: somesh
