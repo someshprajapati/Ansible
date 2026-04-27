@@ -15,9 +15,9 @@
         state: started
         enabled: true
 
-    - name: Open port 80 for http access
+    - name: Open port 80 for nginx access
       firewalld:
-        service: http
+        service: nginx
         permanent: true
         state: enabled
 
