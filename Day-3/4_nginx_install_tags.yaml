@@ -27,7 +27,7 @@
         rule: allow
         port: '80'
         proto: tcp
-      when: ansible_os_family == "Debian"
+      when: ansible_facts["os_family"] == "Ubuntu"
       tags:
         - firewall
         - nginx
