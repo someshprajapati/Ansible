@@ -1,6 +1,7 @@
 ---
 - name: Install packages thru loop
   hosts: all
+  become: true
   vars:
     packages: [ftp, telnet, htop]
 

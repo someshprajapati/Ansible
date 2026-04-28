@@ -1,6 +1,7 @@
 ---
 - name: Create users thru loop
   hosts: all
+  become: true
 
   tasks:
     - name: Create users

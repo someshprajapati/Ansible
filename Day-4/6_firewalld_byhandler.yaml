@@ -1,8 +1,9 @@
 ---
 - name: Allow HTTP traffic with UFW
   hosts: all
-  tasks:
+  become: true
 
+  tasks:
     - name: Ensure ufw is installed
       ansible.builtin.apt:
         name: ufw
